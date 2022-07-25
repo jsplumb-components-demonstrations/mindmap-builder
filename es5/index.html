@@ -1,0 +1,50 @@
+<!doctype html>
+<html>
+    <head>
+        <link rel="stylesheet" href="./node_modules/@jsplumb-components/mindmap/jsplumb.components.mindmap.css">
+        <link rel="stylesheet" href="./node_modules/@jsplumb-components/mindmap/jsplumb.components.mindmap.theme.default.css">
+        <link rel="stylesheet" href="../app.css">
+        <script src="./node_modules/@jsplumb-components/mindmap/jsplumb.components.mindmap.umd.js"></script>
+        <title>Mindmap Builder Demonstration</title>
+    </head>
+
+    <body>
+        <div style="display:flex">
+            <div id="container"></div>
+            <div id="rhs">
+                <div id="undoredo">
+                    <button data-action="undo">Undo</button>
+                    <button data-action="redo">Redo</button>
+                </div>
+                <button id="btnClear">Clear</button>
+                <div id="inspector"></div>
+            </div>
+        </div>
+
+        <script>
+
+            var mindmap = jsPlumbMindmapBuilder.newInstance({
+                container:document.getElementById("container"),
+                inspector:{
+                    container:document.getElementById("inspector")
+                },
+                undoRedo:{
+                    undo:document.querySelector("[data-action='undo']"),
+                    redo:document.querySelector("[data-action='redo']")
+                }
+            })
+
+            mindmap.loadUrl("../example-mindmap.json", function() {
+                mindmap.zoomToFit()
+            })
+
+            document.getElementById("btnClear").addEventListener("click", function() {
+                if (confirm("Clear dataset?")) {
+                    mindmap.clear()
+                }
+            })
+
+
+        </script>
+    </body>
+</html>
